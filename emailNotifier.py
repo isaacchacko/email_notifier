@@ -11,13 +11,16 @@ from json import dumps, loads
 
 # so people on github dont hack me
 from os import environ
- 
+
+# so i can keep running this forever
+from time import sleep
+
 SMTP_SERVER = "imap.gmail.com" 
 SMTP_PORT = 993
 
 # customize these before running
-EMAIL_ADDRESS = environ.get(EMAIL_ADDRESS)
-EMAIL_PASS = environ.get(EMAIL_PASS)
+EMAIL_ADDRESS = environ.get('EMAIL_ADDRESS')
+EMAIL_PASS = environ.get('EMAIL_PASS')
 DEPTH = 100
 TARGETS = []
 NOTIFS = 'none'
@@ -112,4 +115,6 @@ Scanning depth is {}.'''.format(DEPTH))
    save('emails.json', current_emails)
 
 if __name__ == '__main__':
+  while True:
     main()
+    sleep(30*60)
