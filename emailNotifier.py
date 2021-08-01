@@ -23,7 +23,7 @@ EMAIL_ADDRESS = environ.get('EMAIL_ADDRESS')
 EMAIL_PASS = environ.get('EMAIL_PASS')
 DEPTH = 100
 TARGETS = []
-NOTIFS = 'none'
+NOTIFS = 'all'
 
 def load(filename):
   if exists(filename):
@@ -106,9 +106,13 @@ so there is no telling how many emails have arrived since.
 Scanning depth is {}.'''.format(DEPTH))
 
   # send a notification for every new email
-  
   for new_email in current_emails[0:newEmailCount]:
-    notify(new_email)
+    if NOTIFS == 'all':
+      notify(new_email)
+    if NOTIFS == 'targets_only':
+      for target in TARGETS:
+        if target in new_email['from']:
+          notify(new_email)
   
   # save new emails if any
   if newEmailCount != 0:
